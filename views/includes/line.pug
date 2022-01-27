@@ -1,0 +1,12 @@
+if line
+  tr(id=`SKU${line.sku}`)
+    td(scope="row")= line.sku
+    td= line.quantity
+    td= line.name
+    td #{ line.price.toFixed(2) } $
+    td #{ ( line.quantity * line.price ).toFixed(2) } $
+    td
+      img.item-picture(src=line.image_url != '' ? line.image_url : '/images/image-placeholder.png')
+    td
+      i(class="fas fa-edit" onclick=`editRecord(${line.sku}`)
+      i(class="far fa-trash-alt" onclick=`deleteRecord(${line.sku}`)
