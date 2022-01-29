@@ -1,35 +1,39 @@
 const fs = require("fs");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const db = require("./database");
-const Item = require("./database/models/items.model");
+const Item = require("./database/models/Items.model");
 
-db.connect(() => {
-        console.log("Yesssssss Je suis bien conneecte");
-        const newItem = new Item({
-          sku: "6510943",
-          name: "Liz Claiborne ® Wide-Leg Linen-Blend Pants",
-          description: "Be ready for whatevero",
-          sale_price: 26.18,
-          image_url: "http://s7d9.scene7.com/is/image/JCPenney/DP0128201617062485M.tif?hei=380&amp;wid=380&op_usm=.4,.8,0,0&resmode=sharp2&op_usm=1.5,.8,0,0&resmode=sharp",
-          brand: "LIZ CLAIBORNE"
-        });
-        newItem.save();
-      });
 //fonction pour faire migrer tous les items du fichier items.json dans le database
-//Lire le fichier JSON
-const items =JSON.parse(fs.readfilesSync(`${__dirname}/_data/items.json`, 'utf-8'))
+//Lire le fichier JSON et le mettre dans un Objet JS
+const items = JSON.parse(fs.readFileSync("data/items.json", "utf-8"));
 
 //parcourir tous le fichier avec juste les informmations pertinent defini dans item.model avec une boucle
 
-
 //fonction d'importation
-const Migrate =  () => {
-       // each item in items
-        newItem.save();
-      
 
-}
+db.connect(() => {
+  for (let i in items) {
+    const item = items[i];
+    const MyItem = new Item({
+      sku: item.sku,
+      name: item.name,
+      description: item.description,
+      sale_price: item.sale_price,
+      image_url: item.image_url,
+      brand: item.brand,
+    });
+    MyItem.save();
+    console.log(`${i} - ${item.sku} ajoute`);
+  }
+  //je declare un tableau vide
+  //const tab =[]
 
-//mongoimport –jsonArray –db nom_base_de_données –collection nom_collection –fichier emplacement_fichier
-//mongoimport --db dbName --collection collectionName --file fileName.json --jsonArray
-//mongoimport --db dbName --collection collectionName --file fileName.json
+  //     //on parcours les items pour les mettre dams le tableau
+  //
+  //       {
+  //       tab.push(Item)
+  //       console.log("item Ajoute");
+  //   }
+  //     //puis on met le tableau dans mongodb0c
+  //   tab.save();
+});

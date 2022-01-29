@@ -23,6 +23,8 @@ exports.loadItems = () => ItemsLoader.load();
 exports.addLine = (sku, quantity) => {
   const lines = this.getLines();
   const items = this.getItems();
+  const Line = require("../database/models/Line.model");
+
 
   const item = items.find((item) => item.sku === sku);
 
@@ -42,6 +44,11 @@ exports.addLine = (sku, quantity) => {
 
       lines.push(line);
     }
+    //se connecter a la BD pour sauvegarder la ligne
+    db.connect(() => {
+      const MyLine = new Line({line});
+          MyLine.save();
+            })
 
     LinesLoader.save(lines);
     return line;
@@ -52,7 +59,7 @@ exports.addLine = (sku, quantity) => {
 
 exports.addSale = (amount, tps, tvq, total) => {
   const lines = this.getLines();
-
+  const Line = require("../database/models/Sale.model");
   const sale = {
     lines,
     amount: +amount,
@@ -61,21 +68,14 @@ exports.addSale = (amount, tps, tvq, total) => {
     total: +total,
     timestamp: new Date().getTime(),
   };
-
+  db.connect(() => {
+    const MySale = new Sale({sale});
+        MySale.save();
+          })
   SalesLoader.add(sale);
   LinesLoader.save([]);
 
   return sale;
 };
 
-/* const del = title => {
-  const tasks = load();
 
-  if (!tasks.find(task => task.title === title)) {
-    console.log(chalk.red.inverse("Error: Note title not found (" + title + ")"));
-    return;
-  }
-
-  save(tasks.filter(task => task.title !== title));
-  console.log(chalk.green.inverse("Note (" + title + ") deleted !"));
-}; */
