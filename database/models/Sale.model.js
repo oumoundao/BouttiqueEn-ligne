@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 
 //notre model avec lequel on va interagir en BD
 const saleSchema = mongoose.Schema({
-line:{
-    type: String,/* represente lesligne d'achat*/
-},
+lines: {type : mongoose.Types.ObjectId, ref: 'line'}
+,
   amount : {
     type: Number,
     required: true

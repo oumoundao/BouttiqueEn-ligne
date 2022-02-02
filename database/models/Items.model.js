@@ -5,18 +5,22 @@ const itemSchema = mongoose.Schema({
   sku: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    minLength:[7, "{Value} must have exactly 7 characters"] 
   },
   name: {
     type: String,
-    required: true
+    required: true,
+    maxLength: 125
   },
   description: {
     type: String,
+     maxLength: 3000
   },
   sale_price: {
     type: Number,
-    required: true
+    required: true,
+    minimum: 0
   },
   image_url: {
     type: String,
@@ -24,6 +28,8 @@ const itemSchema = mongoose.Schema({
   brand: {
     //verifier le type
     type: String,
+    minLength: 2,
+    maxLength: 30
   },
 });
 

@@ -11,8 +11,8 @@
     "pug": "^3.0.2"
   },
   "scripts": {
- 
-    "start": "nodemon seed.js"
+    "start": "nodemon app.js",
+    "seed": "nodemon seed.js"
   },
   "author": "",
   "license": "ISC"
