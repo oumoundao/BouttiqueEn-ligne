@@ -1,20 +1,15 @@
 extends layouts/main.pug
 
 block content
-  script(src="./javascript/sale.js" DEFER) 
+
   section#sale
-    #top
-      form#line-form(action="/sale" method="POST")
-        select.form-control(type="text" name="sku")
-            option(value=null) Sélectionnez un produit
-            each item in items
-              option(value=item.sku) #{item.sku + " " + item.name}
-        input.form-control(type="text" placeholder="Quantity" name="quantity")
-        input.form-control(type="submit" class="btn btn-primary" value="Ajouter")
-      .error
-        if error
-          p= error
-          
+    form(action="/lines" method="POST")
+      select.form-control(type="text" name="sku")
+          option(value=null) Sélectionnez un produit
+          each item in items
+            option(value=item.sku) #{item.sku + " " + item.name}
+      input.form-control(type="text" placeholder="Quantity" name="quantity")
+      input.form-control(type="submit" class="btn btn-primary" value="Ajouter")
 
     table(class="table")
       thead(class="table-dark")
@@ -29,12 +24,6 @@ block content
       tbody
         each line in lines
           include includes/line
-    
-    - const amount = +lines.reduce( (acc, line) => { return acc + line.price * line.quantity}, 0 ).toFixed(2)
-    - const tps =  +(amount * configs.taxes.gst).toFixed(2)
-    - const tvq = +(amount * configs.taxes.qst).toFixed(2)
-    - const total = +(amount + tps + tvq).toFixed(2)
-
     .bottom
       .amount
         .title
@@ -43,13 +32,9 @@ block content
           p T.V.Q :
           P Total :
         .values
-          p #{ amount } $
-          p #{ tps } $
-          p #{ tvq } $
-          p #{ total } $
-      form#sale-form(action="/sale/close" method="post")
-        input(type="hidden" name="amount" value=amount)
-        input(type="hidden" name="tps" value=tps)
-        input(type="hidden" name="tvq" value=tvq)
-        input(type="hidden" name="total" value=total)
+          p #{ results.subtotal.toFixed(2) } $
+          p #{ results.gst.toFixed(2) } $
+          p #{ results.qst.toFixed(2) } $
+          p #{ results.total.toFixed(2) } $
+      form(action="/sale/close" method="post")
         input.btn.btn-primary(type="submit" value="Terminer Vente" disabled=!lines.length)

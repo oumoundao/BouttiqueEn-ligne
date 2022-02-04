@@ -68,24 +68,6 @@ header ul li {
   padding: 1rem;
 }
 
-.ml-1 {
-  margin-left: 0.3rem;
-}
-
-input {
-  border-radius :0.3rem;
-  padding: 0.3rem;
-}
-
-input[list="items"] {
-  flex: 0 1 auto;
-  width: 28rem;
-  height: 2.5rem;
-  border-radius :0.3rem;
-  margin-right: 7px;
-}
-
-
 footer {
   display: flex;
   justify-content: center;
@@ -143,41 +125,23 @@ footer p {
 
 .btn-primary:hover {
   background-color: var(--primary-color);
-  cursor: pointer;
 }
 
 #sale {
   display: grid;
   grid:
-    "form form form form" auto
+    "form form form form" 4rem
     "table table table table" 1fr
     ". . . bottom" minmax(min-content, max-content)
     / 1fr 1fr minmax(min-content, max-content);
 }
 
-#top {
-  margin-bottom: 0.5rem;
-  grid-area: form;
-  background-color: var(--primary-color);
-}
-
-#line-form {
+form {
   display: flex;
   flex-flow: row nowrap;
-  padding: 0.3rem;
-}
-
-#line-form div {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: center;
-}
-
-.error {
-  flex: 1 1 auto;
-  padding: 0.3rem;
-  font-weight: 700;
-  color: red;
+  background-color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  grid-area: form;
 }
 
 .table {

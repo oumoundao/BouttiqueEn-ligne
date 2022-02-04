@@ -12,7 +12,10 @@ const connectionString = `${protocol}://${username}:${password}@${url}/${databas
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  };
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useFindAndModify: false,
+};
 
 exports.connect = (callback) => mongoose
   .connect(connectionString, options)
