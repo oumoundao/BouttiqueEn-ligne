@@ -1,7 +1,7 @@
 const Line = require("../database/models/line.model.js");
 //conts {} =require 
 
-exports.createLine = (sku, quantity,name, sale_price,image_url,brand) => {
+exports.createLine = async (sku, quantity,name, sale_price,image_url,brand) => {
     const newLine = new Line({
         sku: sku,
         quantity: quantity,
@@ -15,7 +15,7 @@ exports.createLine = (sku, quantity,name, sale_price,image_url,brand) => {
       } 
 
 
-exports.getLineUpdate = (sku,quantity) => {
+exports.updateLine = async (sku,quantity) => {
 
     return Line.findOneAndUpdate(
         { sku: sku },
@@ -23,13 +23,17 @@ exports.getLineUpdate = (sku,quantity) => {
         { runValidators: true, new: true }
       );
 } 
+exports.getLine = async (sku) => {
 
-exports.getLines = () => {
+    return Line.findOne({sku});
+} 
+
+exports.getLines = async () => {
 
     return Line.find({});
 } 
 
-exports.deleteLines = () => {
+exports.deleteLines = async () => {
 
     return Line.deleteMany({});
 } 

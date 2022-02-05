@@ -2,7 +2,7 @@
 const Sale = require("../database/models/sale.model.js");
 //conts {} =require 
 
-exports.createSale = (lines, subtotal, gst,qst,total) => {
+exports.createSale = async (lines, subtotal, gst,qst,total) => {
     const newSale = new Sale({
         lines: lines,
         subtotal: subtotal,
@@ -14,12 +14,12 @@ exports.createSale = (lines, subtotal, gst,qst,total) => {
       return newSale.save();
     }
 
-exports.getItem = (sku) => {
+exports.getItem = async (sku) => {
 
     return Item.findOne({ sku: sku })
 } 
 
-exports.getItems = (sku) => {
+exports.getItems = async (sku) => {
 
     return Item.find({})
 } 

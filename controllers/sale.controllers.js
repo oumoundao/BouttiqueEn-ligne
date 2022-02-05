@@ -29,28 +29,47 @@ function getResults(lines) {
 }
 
 exports.itemsList = async (req, res) => {
-  const linePromise = getLines();
-  const itemPromise = getItems()
-    .collation({ locale: "fr_CA" })
-    .sort({ name: 1 });
-    await Promise.all([linePromise, itemPromise])
-    .then(([lines, items]) => {
-      const results = getResults(lines);
-      res.render("sale", {
-        configs: getConfigs(),
-        items: items,
-        lines: lines,
-        results: results,
-      });
-    })
-    .catch((error) => console.log(error));
+  try {
+    const lines = await getLines();
+    const items = await getItems();
+    //console.log(items[0]);
+    //items = items.length ? items.collation({ locale: "fr_CA" }).sort({ name: 1 }) : items;
+
+    //operation ternaire
+    // items = items/*.collation({ locale: "fr_CA" })*/.sort({ name: 1 });
+
+    const results = getResults(lines);
+    res.render("sale", {
+      configs: getConfigs(),
+      items: items,
+      lines: lines,
+      results: results,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  //const linePromise = getLines();
+  //const itemPromise = getItems()
+  //   .collation({ locale: "fr_CA" })
+  //   .sort({ name: 1 });
+  //   await Promise.all([linePromise, itemPromise])
+  //   .then(([lines, items]) => {
+  //     const results = getResults(lines);
+  //     res.render("sale", {
+  //       configs: getConfigs(),
+  //       items: items,
+  //       lines: lines,
+  //       results: results,
+  //     });
+  //   })
+  //   .catch((error) => console.log(error));
 };
 
 exports.saleList = async (req, res) => {
   await getLines()
     .then((lines) => {
       const results = getResults(lines);
-       createSale(
+      createSale(
         lines,
         results.subtotal,
         results.gst,

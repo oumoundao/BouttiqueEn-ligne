@@ -2,12 +2,12 @@ const Item = require("../database/models/item.model.js");
 //conts {} =require 
 
 
-exports.getItem = (sku) => {
+exports.getItem = async (sku) => {
 
     return Item.findOne({ sku: sku })
 } 
 
-exports.getItems = (sku) => {
+exports.getItems = async (sku) => {
 
     return Item.find({})
 } 
