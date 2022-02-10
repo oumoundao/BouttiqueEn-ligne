@@ -1,16 +1,9 @@
 const Item = require("../database/models/item.model.js");
-//conts {} =require 
 
+exports.getItem = (sku) => {
+  return Item.findOne({ sku: sku });
+};
 
-exports.getItem = async (sku) => {
-
-    return Item.findOne({ sku: sku })
-} 
-
-exports.getItems = async (sku) => {
-
-    return Item.find({})
-} 
-
-
-
+exports.getItems = () => {
+  return Item.find({}).collation({ locale: "fr_CA" }).sort({ name: 1 });;
+};

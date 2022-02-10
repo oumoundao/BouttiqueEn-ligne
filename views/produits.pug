@@ -1,0 +1,15 @@
+extends layouts/main.pug
+
+block content
+    table(class="table")
+      thead(class="table-dark")
+        tr
+          th(scope="col") Image
+          th(scope="col") SKU
+          th(scope="col") Marque
+          th(scope="col") Produit
+          th(scope="col") Prix
+          th(scope="col") Actions          
+      tbody
+        each item in items
+            include includes/item

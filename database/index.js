@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const protocol = "mongodb+srv";
-const url = "cluster0.dat3p.mongodb.net";
+const url = "cluster0.dat3p.mongodb.net"
 const params = "?retryWrites=true&w=majority";
 const username = "User";
 const password = "pw4User$";

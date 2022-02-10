@@ -1,0 +1,10 @@
+if item
+  tr(id=`SKU${item.sku}`)
+    td(class="table-center")= item.image 
+    td(class="table-center")= item.sku 
+    td= item.brand
+    td= item.name
+    td= item.list_price   
+    td(class="table-center")
+      i(class="fas fa-edit")
+      i(class="far fa-trash-alt")
