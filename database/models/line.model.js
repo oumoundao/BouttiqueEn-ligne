@@ -8,7 +8,8 @@ const schema = mongoose.Schema({
   quantity: {
     type: Number,
     required: true,
-    min: 1
+    min: [1,"Quantity must be between 1 and 99"],
+    max: [99,"Quantity must be between 1 and 99"]
   },
   name: {
     type: String,

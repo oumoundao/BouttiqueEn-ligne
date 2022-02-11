@@ -1,40 +1,24 @@
-const Line = require("../database/models/line.model.js");
+const Line = require('../database/models/line.model')
 
-exports.createLine =  (
-  sku,
-  quantity,
-  name,
-  sale_price,
-  image_url,
-  brand
-) => {
-  const newLine = new Line({
-    sku: sku,
-    quantity: quantity,
-    name: name,
-    price: sale_price,
-    image_url: image_url,
-    brand: brand,
-  });
+exports.createLine = data => {
+  return (new Line({
+    sku: data.sku,
+    quantity: data.quantity,
+    name: data.item.name,
+    price: data.item.sale_price,
+    image_url: data.item.image_url,
+    brand: data.item.brand,
+  })).save()
+}
 
-  return newLine.save();
-};
+exports.readLines = () => {
+  return Line.find({})
+}
 
-exports.updateLine =  (sku, quantity) => {
-  return Line.findOneAndUpdate(
-    { sku: sku },
-    { $inc: { quantity: quantity } },
-    { runValidators: true, new: true }
-  );
-};
-exports.getLine =  (sku) => {
-  return Line.findOne({ sku });
-};
-
-exports.getLines =  () => {
-  return Line.find({});
-};
-
-exports.deleteLines =  () => {
+exports.deleteAllLines = () => {
   return Line.deleteMany({});
-};
+}
+
+exports.incrementLineQuantity = (data) => {
+  return Line.findOneAndUpdate({ sku: data.sku }, { $inc: { quantity: data.quantity } }, { runValidators: true, new: true })
+}

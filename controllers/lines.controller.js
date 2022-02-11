@@ -1,35 +1,18 @@
-//const data = require("../data");
+const { readItem } = require("../queries/items.queries")
+const { incrementLineQuantity, createLine } = require("../queries/lines.queries")
 
-// const Item = require("../database/models/item.model.js");
-// const Line = require("../database/models/line.model.js");
-// const Sale = require("../database/models/sale.model.js");
-const { getItem } = require("../queries/items.queries");
-const { updateLine, createLine } = require("../queries/lines.queries");
-
-exports.lineList = async (req, res) => {
-  const sku = req.body?.sku;
-  const quantity = req.body?.quantity;
+exports.addLine = async (req, res, next) => {
   try {
-    let foundItem = await getItem(sku);
-//console.log(foundItem);
-    if (foundItem) {
-      let updatedLine = await updateLine(sku, quantity);
-
-      if (!updatedLine) {
-        await createLine(
-          sku,
-          quantity,
-          foundItem.name,
-          foundItem.sale_price,
-          foundItem.image_url,
-          foundItem.brand
-        );
-      }
-      res.redirect("/sale");
+    const {sku, quantity} = req.body
+    const item = await readItem(sku)
+    if (item) {
+      let line = await incrementLineQuantity({sku, quantity})
+      if (!line) await createLine({sku, quantity, item})
+      res.redirect("/sale")
     } else {
-      throw new Error(`L'item ${sku} est introuvable`);
+      throw new Error(`L'item ${sku} est introuvable`)
     }
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    next(err)
   }
-};
+}

@@ -21,7 +21,7 @@ const schema = mongoose.Schema({
     type: Array,
     required: true
   }
-}, {timestamp: true});
+}, {timestamps: true});
 
 const Sale = mongoose.model("Sale", schema);
 module.exports = Sale;

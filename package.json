@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "seed": "node ./data/seed.js"
+    "migrate": "node ./data/migrator.js"
   },
   "author": "",
   "license": "ISC"

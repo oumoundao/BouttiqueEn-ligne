@@ -1,8 +1,6 @@
 const router = require("express").Router();
+const { addLine } = require("../controllers/lines.controller")
 
-const { lineList } = require("../controllers/lines.controller");
-
-
-router.post("/", lineList);
+router.post("/", addLine);
 
 module.exports = router;

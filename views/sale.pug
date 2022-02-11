@@ -1,16 +1,14 @@
 extends layouts/main.pug
 
 block content
-
   section#sale
     form(action="/lines" method="POST")
       select.form-control(type="text" name="sku")
-          option(value=null) Sélectionnez un produit
+          option(value="") Sélectionnez un produit
           each item in items
             option(value=item.sku) #{item.sku + " " + item.name}
-      input.form-control(type="text" placeholder="Quantity" name="quantity")
+      input.form-control(type="number" placeholder="Quantity" name="quantity" min=1 value=1)
       input.form-control(type="submit" class="btn btn-primary" value="Ajouter")
-
     table(class="table")
       thead(class="table-dark")
         tr

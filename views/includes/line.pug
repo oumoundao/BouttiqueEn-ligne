@@ -8,5 +8,5 @@ if line
     td(class="table-center")
       img.item-picture(src=line.image_url != '' ? line.image_url : '/images/image-placeholder.png')
     td(class="table-center")
-      i(class="fas fa-edit")
-      i(class="far fa-trash-alt")
+      i(class="fas fa-edit" onclick=`editRecord(${line.sku}`)
+      i(class="far fa-trash-alt" onclick=`deleteRecord(${line.sku}`)
