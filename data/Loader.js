@@ -15,7 +15,9 @@ class Loader {
       const json = buffer.toString();
       return JSON.parse(json);
     } catch (e) {
-      return this.isUsingId ? { nextId: this.defaultId, [this.dataKey]: [] } : [];
+      return this.isUsingId
+        ? { nextId: this.defaultId, [this.dataKey]: [] }
+        : [];
     }
   };
 
@@ -52,7 +54,9 @@ class Loader {
     let data = this.isUsingId ? content[this.dataKey] : content;
 
     if (!data.find((r) => r[key] === value)) {
-      console.log(chalk.red.inverse(`Error: ${key} not found with value ${value}`));
+      console.log(
+        chalk.red.inverse(`Error: ${key} not found with value ${value}`)
+      );
       return;
     }
 

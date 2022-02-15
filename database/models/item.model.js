@@ -25,7 +25,7 @@ const schema = mongoose.Schema(
     },
     image_url: {
       type: String,
-      default: ''
+      default: "",
     },
     brand: {
       type: String,

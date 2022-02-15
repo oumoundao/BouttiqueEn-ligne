@@ -7,5 +7,5 @@ if item
     td= item.name
     td #{ (+item.sale_price).toFixed(2) } $   
     td(class="table-center")
-      i(class="fas fa-edit" onclick=`openEditItem(${item .sku}`)
-      i(class="far fa-trash-alt" onclick=`deleteRecord(${item .sku}`)
+      i(class="fas fa-edit" onclick=`openEditItem(${item.sku})`)
+      i(class="far fa-trash-alt" onclick=`opendeleteItem(${item.sku})`)

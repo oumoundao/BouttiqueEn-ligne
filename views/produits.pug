@@ -1,17 +1,60 @@
 extends layouts/main.pug
 
 block content
-    table(class="table")
-      thead(class="table-dark")
-        tr
-          th(scope="col") Image
-          th(scope="col") SKU
-          th(scope="col") Marque
-          th(scope="col") Produit
-          th(scope="col") Prix
-          th(scope="col")       
-            i(class="fas fa-plus")      
-      tbody
-        each item in items
-            include includes/item
-               
+  table(class="table")
+    thead(class="table-dark")
+      tr
+        th(scope="col") Image
+        th(scope="col") SKU
+        th(scope="col") Marque
+        th(scope="col") Produit
+        th(scope="col") Prix
+        th(scope="col")       
+          button(onclick=`openAddItem()`)
+            i.fas.fa-plus    
+    tbody
+      each item in items
+          include includes/item
+  form(action="/produits/produits" method="POST" encType= "multipart/form-data")  
+    #myModal1.modal
+      #modal1.mod
+        h3 Ajout d&apos;un produit
+        input#Img.entree(type="file",name="image_url" accept=".jpeg ,.png ,.jpj" src="")
+        label.lab SKU
+        input#Sku.inp(type="text" )
+        label.lab Marque
+        input#Brand.inp(type="text")
+        label.lab Prix
+        input#Price.inp(type="number")
+        label.lab Nom
+        input#Name.inp(type="text")
+        label.lab Description
+        input#Descript.desc(type="text")
+        #butt1
+          input.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
+          input#annul.btn.btn-primary(type="reset" value="Annuler" disabled=!items.length)
+  form(action="/produits/:sku" method="PUT")  
+    #myModal2.modal
+      #modal2.mod
+        h3 Modification d'un produit
+        input#img.entree(type="text", src="")
+        label.lab SKU
+        input#sku.inp(type="text")
+        label.lab Marque
+        input#brand.inp(type="text")
+        label.lab Prix
+        input#price.inp(type="number")
+        label.lab Nom
+        input#name.inp(type="text")
+        label.lab Description
+        input#descript.desc(type="text")
+        #butt2
+          input.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
+          input#ann.btn.btn-primary(type="reset" value="Annuler" disabled=!items.length)
+  form(action="/produits/:sku" method="PUT") 
+    #myModal3.modal
+      .modal3
+        p Voulez vous réellement supprimer ce produit
+        div(id="oui_non")
+          input.btn.btn-primary(type="submit" value="Oui" disabled=!items.length)
+          input#non.btn.btn-primary(type="reset" value="Non" disabled=!items.length)
