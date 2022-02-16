@@ -11,46 +11,71 @@
 //     });
 // });
 
+const skuinput = document.querySelector("#Sku");
+const imginput = document.querySelector("#Img");
+const brandinput = document.querySelector("#Brand");
+const nameinput = document.querySelector("#Name");
+const descinput = document.querySelector("#Descript");
+const priceinput = document.querySelector("#Price");
+
+const skuinput2 = document.querySelector("#sku");
+const imginput2 = document.querySelector("#img");
+const brandinput2 = document.querySelector("#brand");
+const nameinput2 = document.querySelector("#name");
+const descinput2 = document.querySelector("#descript");
+const priceinput2 = document.querySelector("#price");
+
+const closeadd = document.getElementById("annul");
+const closeEdit = document.getElementById("ann");
+const closeDelete = document.getElementById("non");
+
+const confAdd = document.getElementById("conf1");
+const confEdit = document.getElementById("conf2");
+const confdelete = document.getElementById("conf3");
+
+const modal1 = document.getElementById("myModal1");
+const modal2 = document.getElementById("myModal2");
+const modal3 = document.getElementById("myModal3");
+
 function openAddItem() {
-  const modal = document.getElementById("myModal1");
+  modal1.style.display = "block";
+}
 
-  modal.style.display = "block";
-
-  const annul = document.getElementById("annul");
-  annul.onclick = function () {
-    modal.style.display = "none";
-  };
-  const skuinput = document.querySelector("#Sku");
-  const imginput = document.querySelector("#Img");
-  const brandinput = document.querySelector("#Brand");
-  const nameinput = document.querySelector("#Name");
-  const descinput = document.querySelector("#Descript");
-  const priceinput = document.querySelector("#Price");
-
-  skuinput.value = newsku;
-  imginput.value = item.image_url;
-  brandinput.value = item.brand;
-  nameinput.value = item.name;
-  descinput.value = item.description;
-  priceinput.value = item.sale_price;
-
+closeadd.onclick = function () {
+  modal1.style.display = "none";
+};
+confAdd.onclick = function () {
+  debugger;
   const newProduct = {
     sku: skuinput.value,
     name: nameinput.value,
     description: descinput.value,
     sale_price: priceinput.value,
-    image_url: imginput.value,
+
     brand: brandinput.value,
   };
-  axios.post(`http://localhost:3000/produits/produit`, newProduct);
-}
+  //pour construire un objet de type form data
+  const formData = new FormData();
+
+  //Object.keys va recuperer les propriete sous formme de tableau et le parcourir avec foreach
+  Object.keys(newProduct).forEach((name) => {
+    //pour chaque proipriete il va l"ajouter
+    formData.append(name, newProduct[name]);
+  });
+  formData.append("image_url", imginput.value);
+
+  //le murter attend un type de form data
+  axios.post(`http://localhost:3000/produits`, formData).then((res) => {
+    //res.data
+    console.log(res.data);
+  });
+  modal1.style.display = "none";
+};
 
 function openEditItem(sku) {
   async function getItem() {
     try {
-      const resultat = await axios.get(
-        `http://localhost:3000/produits/produit/${sku}`
-      );
+      const resultat = await axios.put(`http://localhost:3000/produits/${sku}`);
       return resultat.data;
     } catch (error) {
       console.log(error);
@@ -59,35 +84,28 @@ function openEditItem(sku) {
 
   getItem().then((item) => {
     console.log(item);
-    const modal = document.getElementById("myModal2");
-    modal.style.display = "block";
-    const annul = document.getElementById("ann");
+
+    modal2.style.display = "block";
+
     annul.onclick = function () {
-      modal.style.display = "none";
+      modal2.style.display = "none";
     };
 
     //console.log("hello");
-    const skuinput = document.querySelector("#sku");
-    const imginput = document.querySelector("#img");
-    const brandinput = document.querySelector("#brand");
-    const nameinput = document.querySelector("#name");
-    const descinput = document.querySelector("#descript");
-    const priceinput = document.querySelector("#price");
 
-    skuinput.value = sku;
-    imginput.value = item.image_url;
-    brandinput.value = item.brand;
-    nameinput.value = item.name;
-    descinput.value = item.description;
-    priceinput.value = item.sale_price;
+    skuinput2.value = sku;
+    imginput2.value = item.image_url;
+    brandinput2.value = item.brand;
+    nameinput2.value = item.name;
+    descinput2.value = item.description;
+    priceinput2.value = item.sale_price;
   });
 }
 
 function opendeleteItem(sku) {
-  const modal = document.getElementById("myModal3");
-  modal.style.display = "block";
-  const annul = document.getElementById("non");
-  annul.onclick = function () {
-    modal.style.display = "none";
+  modal3.style.display = "block";
+
+  closeDelete.onclick = function () {
+    modal3.style.display = "none";
   };
 }

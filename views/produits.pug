@@ -15,7 +15,7 @@ block content
     tbody
       each item in items
           include includes/item
-  form(action="/produits/produits" method="POST" encType= "multipart/form-data")  
+  form(action="/produits" method="POST" encType= "multipart/form-data")  
     #myModal1.modal
       #modal1.mod
         h3 Ajout d&apos;un produit
@@ -31,7 +31,7 @@ block content
         label.lab Description
         input#Descript.desc(type="text")
         #butt1
-          input.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
+          input#conf1.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
           input#annul.btn.btn-primary(type="reset" value="Annuler" disabled=!items.length)
   form(action="/produits/:sku" method="PUT")  
     #myModal2.modal
@@ -49,12 +49,12 @@ block content
         label.lab Description
         input#descript.desc(type="text")
         #butt2
-          input.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
+          input#conf2.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
           input#ann.btn.btn-primary(type="reset" value="Annuler" disabled=!items.length)
   form(action="/produits/:sku" method="PUT") 
     #myModal3.modal
       .modal3
         p Voulez vous réellement supprimer ce produit
         div(id="oui_non")
-          input.btn.btn-primary(type="submit" value="Oui" disabled=!items.length)
+          input#conf3.btn.btn-primary(type="submit" value="Oui" disabled=!items.length)
           input#non.btn.btn-primary(type="reset" value="Non" disabled=!items.length)

@@ -43,8 +43,8 @@ exports.editItem = async (req, res) => {
 
 exports.addItem = async (req, res) => {
   const { name, brand, sale_price, description, sku } = req.body;
-  const image_url = req.file.filename;
-  //console.log("Bonjour", req.file);
+  console.log("Bonjour", req.file);
+  const image_url = req.file.fieldname;
 
   try {
     const item = await createItem({
@@ -55,8 +55,8 @@ exports.addItem = async (req, res) => {
       image_url,
       brand,
     });
-    //res.render("produits", { item});
-    res.redirect("/produits");
+    res.render("produits" /*, { item}*/);
+    //res.redirect("/produits");
   } catch (error) {
     console.log(error);
   }

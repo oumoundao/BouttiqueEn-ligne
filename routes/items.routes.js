@@ -1,9 +1,13 @@
 const router = require("express").Router();
 const multer = require("multer");
-const upload = multer({filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix)
-  }  /*dest: "uploads/"*/ }).single("image_url");
+const upload =
+  multer(/*{
+  filename: function (req, file, cb) {
+    debugger;
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  } /*dest: "uploads/"
+}*/).single("image_url");
 
 const {
   MyItem,
@@ -24,12 +28,12 @@ const { itemsList, saleList } = require("../controllers/sales.controller");
 router.get("/", MyItems);
 
 //route pour permettre de rtrouver un item sellectionne
-router.delete("/produit/:sku", deleteItem);
+router.delete("/:sku", deleteItem);
 
-router.get("/produit/:sku", MyItem);
+router.get("/:sku", MyItem);
 
 router.put("/:sku", upload, editItem);
 
-router.post("/produits", upload, addItem);
+router.post("/", upload, addItem);
 
 module.exports = router;
