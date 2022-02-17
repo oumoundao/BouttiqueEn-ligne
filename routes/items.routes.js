@@ -1,14 +1,3 @@
-const router = require("express").Router();
-const multer = require("multer");
-const upload =
-  multer(/*{
-  filename: function (req, file, cb) {
-    debugger;
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
-  } /*dest: "uploads/"
-}*/).single("image_url");
-
 const {
   MyItem,
   MyItems,
@@ -17,9 +6,36 @@ const {
   deleteItem,
 } = require("../controllers/items.controller");
 const { itemsList, saleList } = require("../controllers/sales.controller");
-//const { deleteItem } = require("../queries/items.queries");
+const router = require("express").Router();
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" }).single("image_url");
+const { v4: uuidv4 } = require("uuid");
+/*const upload = multer({storage: storage}).single('image');{
+  filename: function (req, file, cb) {
+    debugger;
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  } /*dest: "uploads/"
+}*/
 
-//multer
+// const MIME_TYPES = {
+//   "image/jpg": "jpg",
+//   "image/jpeg": "jpg",
+//   "image/png": "png",
+// };
+// const storage = multer.diskStorage({
+//   destination: (req, file, callback) => {
+//     callback(null, "images");
+//   },
+//   filename: (req, file, callback) => {
+//     const name = file.originalname.split(" ").join("_");
+//     const extension = MIME_TYPES[file.mimetype];
+//     callback(null, name + uuidv4().split("-")[0] + "." + extension);
+//   },
+// });
+//const upload = multer({ storage: storage }).single("image_url");
+
+//const { deleteItem } = require("../queries/items.queries");
 
 //module.exports = multer({storage: storage}).single('image');
 

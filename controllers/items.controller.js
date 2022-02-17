@@ -55,7 +55,8 @@ exports.addItem = async (req, res) => {
       image_url,
       brand,
     });
-    res.render("produits" /*, { item}*/);
+    //res.render("produits" /*, { item}*/);
+    res.status(200).json(item);
     //res.redirect("/produits");
   } catch (error) {
     console.log(error);

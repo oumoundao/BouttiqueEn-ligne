@@ -11,8 +11,9 @@
 //     });
 // });
 
+let imageToShow = document.querySelector("#display");
 const skuinput = document.querySelector("#Sku");
-const imginput = document.querySelector("#Img");
+let imginput = document.querySelector("#Img");
 const brandinput = document.querySelector("#Brand");
 const nameinput = document.querySelector("#Name");
 const descinput = document.querySelector("#Descript");
@@ -37,6 +38,21 @@ const modal1 = document.getElementById("myModal1");
 const modal2 = document.getElementById("myModal2");
 const modal3 = document.getElementById("myModal3");
 
+imginput.onchange = function (event) {
+  debugger;
+  let files = event.target.files || event.dataTransfer.files;
+  if (!files.length) {
+    console.warn("no file detected");
+    return false;
+  }
+  const file = files[0];
+  imginput = file;
+  let reader = new FileReader();
+
+  reader.onload = (e) => (imageToShow.src = e.target.result);
+  reader.readAsDataURL(file);
+};
+
 function openAddItem() {
   modal1.style.display = "block";
 }
@@ -45,7 +61,6 @@ closeadd.onclick = function () {
   modal1.style.display = "none";
 };
 confAdd.onclick = function () {
-  debugger;
   const newProduct = {
     sku: skuinput.value,
     name: nameinput.value,
@@ -62,13 +77,18 @@ confAdd.onclick = function () {
     //pour chaque proipriete il va l"ajouter
     formData.append(name, newProduct[name]);
   });
-  formData.append("image_url", imginput.value);
+  formData.append("image_url", imginput);
 
   //le murter attend un type de form data
-  axios.post(`http://localhost:3000/produits`, formData).then((res) => {
-    //res.data
-    console.log(res.data);
-  });
+  axios
+    .post(`http://localhost:3000/produits`, formData)
+    .then((res) => {
+      //res.data
+      console.log(res.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   modal1.style.display = "none";
 };
 
