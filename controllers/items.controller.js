@@ -64,10 +64,11 @@ exports.addItem = async (req, res) => {
 };
 
 exports.deleteItem = async (req, res) => {
-  const item = await deleteItem(req.params.sku);
   try {
+    const item = await deleteItem(req.params.sku);
+
     res.status(200).json(item);
-    res.redirect("/produits");
+    // res.redirect("/produits");
   } catch (error) {
     console.log(error);
   }

@@ -100,7 +100,7 @@ function openEditItem(sku) {
     } catch (error) {
       console.log(error);
     }
-  }
+  }y
 
   getItem().then((item) => {
     console.log(item);
@@ -125,7 +125,21 @@ function openEditItem(sku) {
 function opendeleteItem(sku) {
   modal3.style.display = "block";
 
-  closeDelete.onclick = function () {
-    modal3.style.display = "none";
+  confdelete.onclick = function () {
+    debugger;
+    //try {
+    //const resultat = await axios
+    axios
+      .delete(`http://localhost:3000/produits/${sku}`)
+      .then((resultat) => console.log(resultat.data));
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    //modal1.style.display = "none";
   };
 }
+
+closeDelete.onclick = function () {
+  modal3.style.display = "none";
+};

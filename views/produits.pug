@@ -52,7 +52,7 @@ block content
         #butt2
           input#conf2.btn.btn-primary(type="submit" value="Confirmer" disabled=!items.length)
           input#ann.btn.btn-primary(type="reset" value="Annuler" disabled=!items.length)
-  form(action="/produits/:sku" method="PUT") 
+  form(action="/produits/:sku" method="delete") 
     #myModal3.modal
       .modal3
         p Voulez vous réellement supprimer ce produit
