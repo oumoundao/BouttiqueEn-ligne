@@ -27,7 +27,7 @@ exports.updateItem = (data) => {
   return Item.findOneAndUpdate(
     { sku: data.sku },
     {
-      $inc: {
+      $set: {
         sale_price: data.sale_price,
         image_url: data.image_url,
         name: data.name,

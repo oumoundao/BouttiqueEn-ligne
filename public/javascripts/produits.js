@@ -1,17 +1,17 @@
-// const emailInput = document.querySelector("blur", (event) => {
-//   axios
-//     .get("produits", { params: { email: event.target.value } })
-//     .then((res) => {
-//       console.log("Response: ", res.data);
-//       if (res.data.user) {
-//         event.target.classList.add("error-existing");
-//       } else {
-//         event.target.classList.remove("error-existing");
-//       }
-//     });
-// });
+debugger;
+function nextPage(curentPage) {
+  //pour qu'il \s'arret a la derniere page
+
+  console.log(curentPage);
+  // if (first + numberOfItems <= letterList.length) {
+  //   first += numberOfItems;
+  //   actualPage++;
+  //   getItems(); /* focntion qui affiche la liste des items*/
+  // }
+}
 
 let imageToShow = document.querySelector("#display");
+
 const skuinput = document.querySelector("#Sku");
 let imginput = document.querySelector("#Img");
 const brandinput = document.querySelector("#Brand");
@@ -38,6 +38,10 @@ const modal1 = document.getElementById("myModal1");
 const modal2 = document.getElementById("myModal2");
 const modal3 = document.getElementById("myModal3");
 
+function openAddItem() {
+  modal1.style.display = "block";
+}
+
 imginput.onchange = function (event) {
   debugger;
   let files = event.target.files || event.dataTransfer.files;
@@ -52,10 +56,6 @@ imginput.onchange = function (event) {
   reader.onload = (e) => (imageToShow.src = e.target.result);
   reader.readAsDataURL(file);
 };
-
-function openAddItem() {
-  modal1.style.display = "block";
-}
 
 closeadd.onclick = function () {
   modal1.style.display = "none";
@@ -93,23 +93,24 @@ confAdd.onclick = function () {
 };
 
 function openEditItem(sku) {
+  modal2.style.display = "block";
   async function getItem() {
     try {
-      const resultat = await axios.put(`http://localhost:3000/produits/${sku}`);
+      const resultat = await axios.get(
+        `http://localhost:3000/produits/${sku}/produit`
+      );
       return resultat.data;
     } catch (error) {
       console.log(error);
     }
-  }y
+  }
 
   getItem().then((item) => {
     console.log(item);
 
-    modal2.style.display = "block";
-
-    annul.onclick = function () {
-      modal2.style.display = "none";
-    };
+    // annul.onclick = function () {
+    //   modal2.style.display = "none";
+    // };
 
     //console.log("hello");
 
@@ -130,7 +131,7 @@ function opendeleteItem(sku) {
     //try {
     //const resultat = await axios
     axios
-      .delete(`http://localhost:3000/produits/${sku}`)
+      .get(`http://localhost:3000/produits/delete/${sku}`)
       .then((resultat) => console.log(resultat.data));
     // } catch (error) {
     //   console.log(error);
@@ -140,6 +141,63 @@ function opendeleteItem(sku) {
   };
 }
 
-closeDelete.onclick = function () {
-  modal3.style.display = "none";
-};
+// closeDelete.onclick = function () {
+//   modal3.style.display = "none";
+// };
+
+// closeEdit.onclick = function () {
+//   modal3.style.display = "none";
+// };
+
+function closeModal(ID) {
+  document.getElementById(ID).style.display = "none";
+}
+const items = [];
+
+axios
+  .get(`http://localhost:3000/produits`)
+  .then((response) => (items = response.data));
+
+let numberOfItem = 10;
+let first = 0;
+let actualPage = 1;
+//il faudra ajouter cette variable a la fonction qui liste les items
+//pour les afficher pour qu'il puisse afficher 10 items par page
+//il va rempalcer listItem.leght= first + numberItems
+
+//fonction qui permet d'aller a la porchaine page
+
+//fonction qui permet d'aller a la page precedente
+function previous(curentPage) {
+  // if (first - numberOfItems >= 0) {
+  //   first -= numberOfItems;
+  //   actualPage--;
+  //   getItems();
+  //}
+}
+
+function curent(curentPage) {
+  return curentPage;
+}
+
+function firstPage() {
+  // first = 0;
+  // actualPage = 1;
+  // getItemst();
+}
+
+let maxPages = Math.ceil(letterList.length / numberOfItems);
+
+function lastPage() {
+  // first = maxPages * numberOfItems - numberOfItems;
+  // actualPage = maxPages;
+  // getItems();
+}
+
+//affiche les information de la page ou nous somme cad 1/10 par exple
+//a verifer pour besoin utiliser
+function showPageInfo() {
+  document.getElementById("pageInfo").innerHTML = `
+    Page ${actualPage} / ${maxPages}
+  `;
+}
